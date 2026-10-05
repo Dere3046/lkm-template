@@ -2,7 +2,9 @@ obj-m := mymod.o
 
 KDIR := $(KDIR)
 MDIR := $(realpath $(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
-ODIR := $(MDIR)/out/$(VER)
+# a missing VER must not point at out/ itself
+# make clean would wipe every target
+ODIR := $(MDIR)/out/$(if $(VER),$(VER),unknown)
 
 DEPS := KallRecon
 include $(MDIR)/mk/deps.mk
